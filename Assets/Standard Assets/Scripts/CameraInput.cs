@@ -55,12 +55,19 @@ public class CameraInput : MonoBehaviour
         }
 
         //make sure movement is in the direction the camera is pointing
-        //but ignore the vertical tilt of the camera to get sensible scrolling
         movement = Camera.main.transform.TransformDirection(movement);
         movement.y = 0;
 
-        //away from ground movement
-        movement.y -= ResourceManager.ScrollSpeed * Input.GetAxis("Mouse ScrollWheel");
+        //zoom movement
+        Vector3 zoomDirection = Camera.main.transform.TransformDirection(Vector3.forward) * ResourceManager.ZoomSpeed;
+        
+        float scroll = Input.GetAxis("Mouse ScrollWheel");
+
+        if(scroll != 0.0f)
+        {
+            movement += zoomDirection * Mathf.Sign(scroll);
+            Debug.Log(movement);
+        }
 
         //calculate desired camera position based on received input
         Vector3 origin = Camera.main.transform.position;
@@ -82,7 +89,7 @@ public class CameraInput : MonoBehaviour
         //if a change in position is detected perform the necessary update
         if (destination != origin)
         {
-            Camera.main.transform.position = Vector3.MoveTowards(origin, destination, Time.deltaTime * ResourceManager.ScrollSpeed);
+            Camera.main.transform.position = destination;//Vector3.MoveTowards(origin, destination, Time.deltaTime * ResourceManager.ScrollSpeed);
         }
     }
 
