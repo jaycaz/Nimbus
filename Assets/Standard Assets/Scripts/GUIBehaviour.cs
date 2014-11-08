@@ -24,10 +24,6 @@ public class GUIBehaviour : MonoBehaviour {
 	void Update () {
 	
         // Cycle through abilities using number keys
-        if (Input.GetKeyDown("~"))
-        {
-            abilitySelected = Ability.None;
-        }
         if(Input.GetKeyDown("1"))
         {
             abilitySelected = Ability.Rain;
