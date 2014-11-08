@@ -18,17 +18,20 @@ public class CameraInput : MonoBehaviour
     {
         //if (player && player.human)
         //{
-            MoveCamera();
-            RotateCamera();
+        MoveCamera();
+        RotateCamera();
         //}
     }
 
     private void MoveCamera()
     {
-        float xpos = Input.mousePosition.x;
-        float ypos = Input.mousePosition.y;
+        //float xpos = Input.mousePosition.x;
+        //float ypos = Input.mousePosition.y;
+        CursorBehaviour cursor = GameObject.Find("Cursor").GetComponent<CursorBehaviour>();
+        float xpos = cursor.xpos;
+        float ypos = cursor.ypos;
+        Debug.Log(string.Format("cursor(x,y): ({0}, {1})", xpos, ypos));
 
-        Debug.Log(string.Format("xpos: {0}; ypos: {0}", xpos, ypos));
         Vector3 movement = new Vector3(0, 0, 0);
 
         //horizontal camera movement
@@ -44,11 +47,11 @@ public class CameraInput : MonoBehaviour
         //vertical camera movement
         if (ypos >= 0 && ypos < ResourceManager.ScrollWidth)
         {
-            movement.z -= ResourceManager.ScrollSpeed;
+            movement.z += ResourceManager.ScrollSpeed;
         }
         else if (ypos <= Screen.height && ypos > Screen.height - ResourceManager.ScrollWidth)
         {
-            movement.z += ResourceManager.ScrollSpeed;
+            movement.z -= ResourceManager.ScrollSpeed;
         }
 
         //make sure movement is in the direction the camera is pointing
