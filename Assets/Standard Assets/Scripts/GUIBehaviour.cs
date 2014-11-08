@@ -39,13 +39,13 @@ public class GUIBehaviour : MonoBehaviour {
     void OnGUI()
     {
         // Draw sun
-        sunRect = new Rect(Screen.width - 150f, Screen.height * (1f/2f), sunTexture.width, sunTexture.height);
+        sunRect = new Rect(Screen.width - 150f, Screen.height * (1f/2f), sunTexture.width / 8f, sunTexture.height / 8f);
         GUI.DrawTexture(sunRect, sunTexture);
 
         // Calculate placement of buttons
         GUIStyle buttonStyle = new GUIStyle();
         
-        rainRect = new Rect(sunRect.xMin, sunRect.yMin - 55f, rainTexture.width, rainTexture.height);
+        rainRect = new Rect(sunRect.xMin - 50, sunRect.yMin - 150f, rainTexture.width, rainTexture.height);
         downpourRect = new Rect(rainRect.xMin - 80f, rainRect.yMax - 45f, downpourTexture.width, downpourTexture.height);
         lightningRect = new Rect(downpourRect.xMin, downpourRect.yMax + 20f, lightningTexture.width, lightningTexture.height);
         tornadoRect = new Rect(rainRect.xMin, lightningRect.yMax - 50f, tornadoTexture.width, tornadoTexture.height);
