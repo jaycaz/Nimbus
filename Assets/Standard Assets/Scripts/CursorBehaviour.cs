@@ -27,8 +27,8 @@ public class CursorBehaviour : MonoBehaviour {
         float dx = Input.GetAxis("Mouse X");
         float dy = Input.GetAxis("Mouse Y") * (-1);
         //Debug.Log(string.Format("dx= {0}, dy = {0}", dx, dy));
-        xpos += dx * ResourceManager.MouseSensitivity;
-        ypos += dy * ResourceManager.MouseSensitivity;
+        xpos += dx * ResourceManager.MouseSensitivity * Time.deltaTime;
+        ypos += dy * ResourceManager.MouseSensitivity * Time.deltaTime;
 
         xpos = Mathf.Max(0f, xpos);
         xpos = Mathf.Min(Screen.width, xpos);
