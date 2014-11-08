@@ -30,7 +30,7 @@ public class CameraInput : MonoBehaviour
         CursorBehaviour cursor = GameObject.Find("Cursor").GetComponent<CursorBehaviour>();
         float xpos = cursor.xpos;
         float ypos = cursor.ypos;
-        Debug.Log(string.Format("cursor(x,y): ({0}, {1})", xpos, ypos));
+        //Debug.Log(string.Format("cursor(x,y): ({0}, {1})", xpos, ypos));
 
         Vector3 movement = new Vector3(0, 0, 0);
 
