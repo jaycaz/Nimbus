@@ -66,7 +66,6 @@ public class CameraInput : MonoBehaviour
         if(scroll != 0.0f)
         {
             movement += zoomDirection * Mathf.Sign(scroll);
-            Debug.Log(movement);
         }
 
         //calculate desired camera position based on received input
