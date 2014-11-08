@@ -10,8 +10,13 @@ public class CloudBehaviour : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        Debug.Log(string.Format("Rotation: {0}", transform.rotation));
+        //Debug.Log(string.Format("Rotation: {0}", transform.rotation));
 
+        // Cloud movement: always moves forward
+        Vector3 forward = transform.TransformDirection(Vector3.forward * ResourceManager.CloudMoveSpeed);
+        this.transform.position += forward;
+
+        // Control cloud rotation
         if (Input.GetKey("a"))
         {
             this.transform.Rotate(Vector3.up, (-1) * ResourceManager.CloudTurnSpeed);
