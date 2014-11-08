@@ -4,9 +4,20 @@ using RTS;
 
 public class CloudBehaviour : MonoBehaviour {
 
+    public bool isSelected;
+
 	// Use this for initialization
 	void Start () {
+        isSelected = false;
+        CursorBehaviour c = GameObject.FindObjectOfType<CursorBehaviour>();
+        c.CursorLeftClick += OnCursorLeftClick;
 	}
+
+    private void OnCursorLeftClick(object sender, CursorClickEventArgs e)
+    {
+        //Debug.Log(string.Format("Left Mouse Clicked (cloud)! {0}", UnityEngine.Random.Range(1, 100)));\
+        
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -25,6 +36,10 @@ public class CloudBehaviour : MonoBehaviour {
         {
             this.transform.Rotate(Vector3.up, ResourceManager.CloudTurnSpeed * Time.deltaTime);
         }
+
+        // Control cloud spotlight
+        Light groundLight = this.GetComponentInChildren<Light>();
+        groundLight.enabled = isSelected;
 	}
 
 
