@@ -38,19 +38,17 @@ public class GUIBehaviour : MonoBehaviour {
 
     void OnGUI()
     {
-        float scale = (1f / 8f);
-
         // Draw sun
-        sunRect = new Rect(Screen.width - 120f, Screen.height * (2f/3f), sunTexture.width * scale, sunTexture.height * scale);
+        sunRect = new Rect(Screen.width - 150f, Screen.height * (1f/2f), sunTexture.width, sunTexture.height);
         GUI.DrawTexture(sunRect, sunTexture);
 
         // Calculate placement of buttons
         GUIStyle buttonStyle = new GUIStyle();
         
-        rainRect = new Rect(sunRect.xMin, sunRect.yMin - 55f, rainTexture.width * scale, rainTexture.height * scale);
-        downpourRect = new Rect(rainRect.xMin - 50f, rainRect.yMax - 15f, downpourTexture.width * scale, downpourTexture.height * scale);
-        lightningRect = new Rect(downpourRect.xMin, downpourRect.yMax + 20f, lightningTexture.width * scale, lightningTexture.height * scale);
-        tornadoRect = new Rect(rainRect.xMin, lightningRect.yMax - 15f, tornadoTexture.width * scale, tornadoTexture.height * scale);
+        rainRect = new Rect(sunRect.xMin, sunRect.yMin - 55f, rainTexture.width, rainTexture.height);
+        downpourRect = new Rect(rainRect.xMin - 80f, rainRect.yMax - 45f, downpourTexture.width, downpourTexture.height);
+        lightningRect = new Rect(downpourRect.xMin, downpourRect.yMax + 20f, lightningTexture.width, lightningTexture.height);
+        tornadoRect = new Rect(rainRect.xMin, lightningRect.yMax - 50f, tornadoTexture.width, tornadoTexture.height);
 
         Texture rainImage = abilitySelected == Ability.Rain ? rainActiveTexture : rainTexture;
         Texture downpourImage = abilitySelected == Ability.Downpour ? downpourActiveTexture : downpourTexture;
