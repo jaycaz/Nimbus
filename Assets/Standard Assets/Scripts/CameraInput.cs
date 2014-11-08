@@ -20,6 +20,7 @@ public class CameraInput : MonoBehaviour
         //{
         MoveCamera();
         RotateCamera();
+        CheckForSnapToPlayer();
         //}
     }
 
@@ -108,6 +109,17 @@ public class CameraInput : MonoBehaviour
         if (destination != origin)
         {
             Camera.main.transform.eulerAngles = Vector3.MoveTowards(origin, destination, Time.deltaTime * ResourceManager.RotateSpeed);
+        }
+    }
+
+    private void CheckForSnapToPlayer()
+    {
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            // Moves to look at player.  Changes distance but preserves rotation
+            Vector3 playerPos = GameObject.FindGameObjectWithTag("Player").transform.position;
+            Vector3 abovePlayerPos = playerPos - (Camera.main.transform.TransformDirection(Vector3.forward) * ResourceManager.SnapToPlayerDist);
+            Camera.main.transform.position = abovePlayerPos;
         }
     }
 }
