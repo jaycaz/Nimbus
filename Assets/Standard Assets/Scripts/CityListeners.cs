@@ -7,17 +7,11 @@ public class CityListeners : MonoBehaviour {
     public float maxWaterCapacity;
     public float waterLevel;
     public float waterConsumptionRate;
-    
-    // Variables for Weather
-    public float rainRate;
-    public float heavyRainRate;
 
-    // Variables for Low Water
-    public float lowWaterLevel;
+    // Variables for Water Levels
+    private float lowWaterLevel;
+    private float highWaterLevel;
     public bool isDrought;
-
-    // Variables for High Water
-    public float highWaterLevel;
     public bool isFlooded;
 
     ParticleEmitter[] emitters;
@@ -29,7 +23,9 @@ public class CityListeners : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-
+        // Set Up water levels
+        highWaterLevel = maxWaterCapacity - 2;
+        lowWaterLevel = 20 * waterConsumptionRate;
 
         //Get all the Particle Emitters
         emitters = this.GetComponentsInChildren<ParticleEmitter>();
@@ -76,7 +72,7 @@ public class CityListeners : MonoBehaviour {
             }
             else if (isFlooding)
             {
-                isFlooding = true;
+                isFlooding = false;
                 flood.emit = isFlooding;
             }
         }
@@ -85,7 +81,7 @@ public class CityListeners : MonoBehaviour {
             this.transform.position -= new Vector3(0f, .1f, 0f);
             if (this.transform.position.y < -20)
             {
-                Destroy(this);
+                Destroy(this.gameObject);
             }
         }
         else {
@@ -106,12 +102,12 @@ public class CityListeners : MonoBehaviour {
         if (cloud.isRaining)
         {
             //Debug.Log("ITS RAINING IN THE CITY!");
-            waterLevel += rainRate * Time.deltaTime;
+            waterLevel += cloud.rainRate * Time.deltaTime;
         }
-        else if (cloud.isHeavyRaining)
+        else if (cloud.isDownpouring)
         {
             //Debug.Log("ITS RAINING IN THE CITY!");
-            waterLevel += heavyRainRate * Time.deltaTime;
+            waterLevel += cloud.downpourRate * Time.deltaTime;
         }
     }
 
@@ -123,12 +119,12 @@ public class CityListeners : MonoBehaviour {
         if (cloud.isRaining)
         {
            // Debug.Log("ITS RAINING IN THE CITY!");
-            waterLevel += rainRate * Time.deltaTime;
+            waterLevel += cloud.rainRate * Time.deltaTime;
         }
-        else if (cloud.isHeavyRaining)
+        else if (cloud.isDownpouring)
         {
             //Debug.Log("ITS RAINING IN THE CITY!");
-            waterLevel += heavyRainRate * Time.deltaTime;
+            waterLevel += cloud.downpourRate * Time.deltaTime;
         }
     }
 
