@@ -7936,7 +7936,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxWaterCapacity: 15
-  waterLevel: 15
+  waterLevel: 10
   waterConsumptionRate: .150000006
   isDrought: 0
   isFlooded: 0
@@ -11666,7 +11666,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxWaterCapacity: 10
-  waterLevel: 7.5
+  waterLevel: 5
   waterConsumptionRate: .100000001
   isDrought: 0
   isFlooded: 0

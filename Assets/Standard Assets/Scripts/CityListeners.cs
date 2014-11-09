@@ -8,6 +8,34 @@ public class CityListeners : MonoBehaviour {
     public float waterLevel;
     public float waterConsumptionRate;
 
+    private void cloudChangeWaterLevel(float change)
+    {
+        if((int)(waterLevel + change) > (int) waterLevel)
+        {
+            if(isDusting)
+            {
+                scoring.avgGoodReward();
+            }
+            else
+            {
+                scoring.smallGoodReward();
+            }
+        }
+        else
+        {
+            if(isDusting)
+            {
+                scoring.avgBadReward();
+            }
+            else
+            {
+                scoring.smallBadReward();
+            }
+        }
+        
+        waterLevel += change;
+    }
+
     // Variables for Water Levels
     private float lowWaterLevel;
     private float highWaterLevel;
@@ -20,6 +48,8 @@ public class CityListeners : MonoBehaviour {
 
     private bool isDusting;
     private bool isFlooding;
+
+    private ScoreManager scoring;
 
 	// Use this for initialization
 	void Start () {
@@ -47,6 +77,9 @@ public class CityListeners : MonoBehaviour {
         flood.emit = false;
         isFlooded = false;
         isDrought = false;
+
+        // Set up connection to score manager
+        scoring = GameObject.FindObjectOfType<ScoreManager>();
 	}
 	
 	// Update is called once per frame
@@ -78,6 +111,7 @@ public class CityListeners : MonoBehaviour {
         }
         
         if (isDrought || isFlooded) {
+            scoring.largeBadReward();
             this.transform.position -= new Vector3(0f, .1f, 0f);
             if (this.transform.position.y < -20)
             {
@@ -85,7 +119,8 @@ public class CityListeners : MonoBehaviour {
             }
         }
         else {
-            if (waterLevel >= maxWaterCapacity){
+            if (waterLevel >= maxWaterCapacity)
+            {
                 isFlooded = true;
              }
             else if (waterLevel <= 0)
@@ -102,12 +137,12 @@ public class CityListeners : MonoBehaviour {
         if (cloud.isRaining)
         {
             //Debug.Log("ITS RAINING IN THE CITY!");
-            waterLevel += cloud.rainRate * Time.deltaTime;
+            cloudChangeWaterLevel(cloud.rainRate * Time.deltaTime);
         }
         else if (cloud.isDownpouring)
         {
             //Debug.Log("ITS RAINING IN THE CITY!");
-            waterLevel += cloud.downpourRate * Time.deltaTime;
+            cloudChangeWaterLevel(cloud.downpourRate * Time.deltaTime);
         }
     }
 
@@ -119,12 +154,12 @@ public class CityListeners : MonoBehaviour {
         if (cloud.isRaining)
         {
            // Debug.Log("ITS RAINING IN THE CITY!");
-            waterLevel += cloud.rainRate * Time.deltaTime;
+            cloudChangeWaterLevel(cloud.rainRate * Time.deltaTime);
         }
         else if (cloud.isDownpouring)
         {
             //Debug.Log("ITS RAINING IN THE CITY!");
-            waterLevel += cloud.downpourRate * Time.deltaTime;
+            cloudChangeWaterLevel(cloud.downpourRate * Time.deltaTime);
         }
     }
 

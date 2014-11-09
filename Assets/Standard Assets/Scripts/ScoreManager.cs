@@ -70,5 +70,6 @@ public class ScoreManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        Debug.Log(string.Format("Good: {0}; Bad: {1}", goodPoints, badPoints));
 	}
 }
