@@ -34,7 +34,7 @@ public class EndGameManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        showEndLevelScreen = true;
+        showEndLevelScreen = false;
         showGoodTab = true;
         CursorBehaviour c = GameObject.FindObjectOfType<CursorBehaviour>();
         c.CursorLeftClick += OnCursorLeftClick;

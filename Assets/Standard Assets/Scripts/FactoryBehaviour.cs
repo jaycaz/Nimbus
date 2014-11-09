@@ -20,8 +20,12 @@ public class FactoryBehaviour : MonoBehaviour {
     private void OnTriggerAddCloud(object sender, System.EventArgs e)
     {
         Transform spawnPoint = this.transform.FindChild("Cloud_Spawn_Point");
-        clouds.Add((GameObject)Instantiate(cloudPrefab, spawnPoint.position, spawnPoint.rotation));
-        Debug.Log(string.Format("Cloud {0} created!", clouds.Count));
+        GameObject cloud = (GameObject)Instantiate(cloudPrefab, spawnPoint.position, spawnPoint.rotation);
+        clouds.Add(cloud);
+        if (cloud != null)
+        {
+            Debug.Log(string.Format("Cloud {0} created!", clouds[clouds.Count - 1]));
+        }
     }
 	
 	// Update is called once per frame
