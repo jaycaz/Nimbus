@@ -15,8 +15,27 @@ public class CloudBehaviour : MonoBehaviour {
 
     private void OnCursorLeftClick(object sender, CursorClickEventArgs e)
     {
-        //Debug.Log(string.Format("Left Mouse Clicked (cloud)! {0}", UnityEngine.Random.Range(1, 100)));\
-        
+        //Debug.Log(string.Format("Left Mouse Clicked (cloud)! {0}", e.position));
+        RaycastHit raycastInfo;
+        //Vector3 startPos = Camera.main.transform.TransformPoint(Camera.main.transform.localPosition);        
+        //Vector3 cursorPos = Camera.main.ScreenToWorldPoint(new Vector3(e.position.x, e.position.y, 0f));
+
+        Ray cursorRay = Camera.main.ScreenPointToRay(new Vector3(e.position.x, Screen.height - e.position.y, 0));//new Ray(startPos, Vector3.MoveTowards(startPos, cursorPos, Mathf.Infinity));
+        //Debug.Log(string.Format("cursorray: {0}", cursorRay));
+        Debug.DrawRay(cursorRay.origin, cursorRay.direction * 1000, Color.blue, 10000f);
+        bool rayCollides = Physics.Raycast(cursorRay, out raycastInfo, Mathf.Infinity);
+        if (rayCollides)
+        {
+            Debug.Log(string.Format("Ray collides with something at point {0}", raycastInfo.point));
+            if (raycastInfo.collider.gameObject == this.gameObject)
+            {
+                isSelected = true;
+            }
+            else
+            {
+                isSelected = false;
+            }
+        }
     }
 	
 	// Update is called once per frame

@@ -29,6 +29,8 @@ public class CursorBehaviour : MonoBehaviour {
 
     void OnGUI()
     {
+        GUI.depth = -1;
+
         if (!cursorTexture)
         {
             Debug.LogError("Assign a Texture in the inspector.");

@@ -34,10 +34,35 @@ public class GUIBehaviour : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         abilitySelected = Ability.None;
+
+        CursorBehaviour c = GameObject.FindObjectOfType<CursorBehaviour>();
+        c.CursorLeftClick += OnCursorLeftClick;
 	}
+
+    private void OnCursorLeftClick(object sender, CursorClickEventArgs e)
+    {
+        if(rainRect.Contains(e.position))
+        {
+            abilitySelected = Ability.Rain;
+        }
+        else if (downpourRect.Contains(e.position))
+        {
+            abilitySelected = Ability.Downpour;
+        }
+        else if (lightningRect.Contains(e.position))
+        {
+            abilitySelected = Ability.Lightning;
+        }
+        else if (tornadoRect.Contains(e.position))
+        {
+            abilitySelected = Ability.Tornado;
+        }
+    }
 
     void OnGUI()
     {
+        GUI.depth = 0;
+
         // Start sun animation
         sunRect = new Rect(Screen.width - 100f, Screen.height * (1f/2f), 100, 100);
         Vector3 newAnimPos = Camera.main.ScreenToWorldPoint(new Vector3(sunRect.xMin, sunRect.yMin, 6));

@@ -14,16 +14,16 @@ public class CityListeners : MonoBehaviour {
 
     void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Enter");
+        //Debug.Log("Enter");
     }
 
     void OnTriggerStay(Collider other)
     {
-        Debug.Log("Stay");
+        //Debug.Log("Stay");
     }
 
     void OnTriggerExit(Collider other)
     {
-        Debug.Log("Exit");
+        //Debug.Log("Exit");
     }
 }
