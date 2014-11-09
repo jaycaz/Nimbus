@@ -52,6 +52,7 @@ public class CloudBehaviour : MonoBehaviour {
         moveToObject.AddComponent<SpriteRenderer>();
         moveToObject.AddComponent<Animator>();
         moveToObject.transform.Rotate(new Vector3(90f, 0f, 0f));
+        moveToObject.transform.localScale = new Vector3(5f, 5f, 5f);
         SpriteRenderer moveToSprite = moveToObject.GetComponent<SpriteRenderer>();
         Animator spriteAnimator = moveToObject.GetComponent<Animator>();
         spriteAnimator.runtimeAnimatorController = animController;
@@ -148,7 +149,7 @@ public class CloudBehaviour : MonoBehaviour {
                 if (hit.collider.gameObject.tag == "Terrain")
                 {
                     //Debug.Log(string.Format("Right click ray collides with terrain at point {0}", raycastInfo.point));
-                    moveToObject.transform.position = hit.point - new Vector3(0f, -10f, 0f);
+                    moveToObject.transform.position = hit.point + new Vector3(0f, 5f, 0f);
                     moveToObject.SetActive(true);
                     destination = moveToObject.transform.position;
                     hasDest = true;

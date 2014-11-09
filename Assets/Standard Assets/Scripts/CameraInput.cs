@@ -97,10 +97,10 @@ public class CameraInput : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.Space))
         {
-            // Moves to look at player.  Changes distance but preserves rotation
-            Vector3 playerPos = GameObject.FindGameObjectWithTag("Player").transform.position;
-            Vector3 abovePlayerPos = playerPos - (Camera.main.transform.TransformDirection(Vector3.forward) * ResourceManager.SnapToPlayerDist);
-            Camera.main.transform.position = abovePlayerPos;
+            // Rotates looking at the various clouds in the scene.  Changes distance but preserves rotation
+
+            //Vector3 abovePlayerPos = playerPos - (Camera.main.transform.TransformDirection(Vector3.forward) * ResourceManager.SnapToPlayerDist);
+            //Camera.main.transform.position = abovePlayerPos;
         }
     }
 }
