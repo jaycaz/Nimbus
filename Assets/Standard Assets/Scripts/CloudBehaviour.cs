@@ -21,6 +21,10 @@ public class CloudBehaviour : MonoBehaviour {
     // Use to time how long a particle has been enabled
     private float deltaTimePassed;
 
+    private float water;
+    private float initialWater;
+    private float initialAlpha;
+
     // Use to block simulatneous actions
     private bool activeWeather;
 
@@ -87,10 +91,17 @@ public class CloudBehaviour : MonoBehaviour {
         isTornado = false;
 
         // Destroy the Particle Emmitters
-        rain.enabled = false;
+        //rain.enabled = false;
 
         rainDuration = 3;
-	}
+
+        water = 15;
+
+        initialWater = water;
+
+        initialAlpha = this.renderer.material.GetColor("_TintColor").a;
+	
+    }
 
     private void OnCursorLeftClick(object sender, CursorClickEventArgs e)
     {
@@ -135,6 +146,18 @@ public class CloudBehaviour : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+
+        // Water decreaases with time
+        water -= Time.deltaTime;
+        Color newColor;
+        newColor = this.renderer.material.GetColor("_TintColor");
+        newColor.a = water * initialAlpha / initialWater;
+
+        this.renderer.material.SetColor("_TintColor", newColor);
+        if (water < 0)
+        {
+            Destroy(this);
+        }
 
         // Cloud movement: always moves forward by default
         Vector3 forward = transform.TransformDirection(Vector3.forward * ResourceManager.CloudMoveSpeed * Time.deltaTime);
