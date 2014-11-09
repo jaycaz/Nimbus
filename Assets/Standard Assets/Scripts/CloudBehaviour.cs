@@ -31,11 +31,6 @@ public class CloudBehaviour : MonoBehaviour {
     ParticleEmitter lightning;
     ParticleEmitter tornado;
 
-    ParticleEmitter rainClone;
-    ParticleEmitter heavyRainClone;
-    ParticleEmitter lightningClone;
-    ParticleEmitter tornadoClone;
-
     public bool hasDest;
     public Vector3 destination;
     public GameObject moveToObject;
@@ -96,12 +91,13 @@ public class CloudBehaviour : MonoBehaviour {
         // Intialize active bools
         activeWeather = false;
         isRaining = false;
+        rain.emit = false;
         isHeavyRaining = false;
         isLightning = false;
         isTornado = false;
 
         // Destroy the Particle Emmitters
-        rain.enabled = false;
+       // rain.enabled = false;
 
         rainDuration = 3;
 	}
@@ -151,12 +147,9 @@ public class CloudBehaviour : MonoBehaviour {
     {
         if (activeWeather)
             return;
-
-        rainClone = (ParticleEmitter)Instantiate(rain, rain.transform.position, rain.transform.rotation);
-        rainClone.transform.parent = rain.transform.parent;
-        rainClone.enabled = true;
         activeWeather = true;
         isRaining = true;
+        rain.emit = isRaining;
         Debug.Log("Make it rain.");
     }
 
@@ -222,8 +215,8 @@ public class CloudBehaviour : MonoBehaviour {
             {
                 if (rainDuration <= deltaTimePassed)
                 {
-                    Destroy(rainClone);
                     isRaining = false;
+                    rain.emit = isRaining;
                     activeWeather = false;
                     deltaTimePassed = 0;
                     Debug.Log("Stop making it rain...");
