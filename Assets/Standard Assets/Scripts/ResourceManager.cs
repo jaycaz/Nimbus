@@ -12,6 +12,7 @@ namespace RTS
         public static float MaxCameraHeight { get { return 2000; } }
         public static float SnapToPlayerDist { get { return 30; } }
         public static float MouseSensitivity { get { return 1000; } }
+        public static float CloudHeight { get { return 25; } }
         public static float CloudAutoTurnSpeed { get { return 1; } }
         public static float CloudManualTurnSpeed { get { return 200 * CloudAutoTurnSpeed; } }
         public static float CloudMoveSpeed { get { return 5.0f; } }

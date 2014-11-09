@@ -13,23 +13,27 @@ public class GUIBehaviour : MonoBehaviour {
     public Texture lightningActiveTexture;
     public Texture tornadoTexture;
     public Texture tornadoActiveTexture;
+    public Texture addCloudTexture;
     public Texture sunTexture;
     
     private Rect rainRect;
     private Rect downpourRect;
     private Rect lightningRect;
     private Rect tornadoRect;
+    private Rect addCloudRect;
     private Rect sunRect;
 
     public delegate void RainHandler(object sender, EventArgs e);
     public delegate void DownpourHandler(object sender, EventArgs e);
     public delegate void LightningHandler(object sender, EventArgs e);
     public delegate void TornadoHandler(object sender, EventArgs e);
+    public delegate void AddCloudHandler(object sender, EventArgs e);
 
     public event RainHandler TriggerRain;
     public event DownpourHandler TriggerDownpour;
     public event LightningHandler TriggerLightning;
     public event TornadoHandler TriggerTornado;
+    public event AddCloudHandler TriggerAddCloud;
     
     public enum Ability
     {
@@ -94,6 +98,16 @@ public class GUIBehaviour : MonoBehaviour {
         }
     }
 
+    private void OnTriggerAddCloud()
+    {
+        //Debug.Log(string.Format("New cloud added! {0}", UnityEngine.Random.Range(1, 100)));
+        AddCloudHandler handler = TriggerAddCloud;
+        if (handler != null)
+        {
+            handler(this, new EventArgs());
+        }
+    }
+
     private void OnCursorLeftClick(object sender, CursorClickEventArgs e)
     {
         if(rainRect.Contains(e.position))
@@ -112,6 +126,12 @@ public class GUIBehaviour : MonoBehaviour {
         {
             OnTriggerTornado();
         }
+        else if (addCloudRect.Contains(e.position))
+        {
+            OnTriggerAddCloud();
+        }
+        //Debug.Log(string.Format("cursor pos: {0}", e.position));
+        //Debug.Log(string.Format("cloudrect: {0}", addCloudRect));
     }
 
     void OnGUI()
@@ -158,6 +178,13 @@ public class GUIBehaviour : MonoBehaviour {
         if (GUI.Button(tornadoRect, tornadoImage, buttonStyle) || Input.GetKeyDown("4"))
         {
             OnTriggerTornado();
+        }
+
+        // Add cloud button
+        addCloudRect = new Rect(10, 10, addCloudTexture.width, addCloudTexture.height);
+        if (GUI.Button(addCloudRect, addCloudTexture, buttonStyle))
+        {
+            OnTriggerAddCloud();
         }
     }
 	
