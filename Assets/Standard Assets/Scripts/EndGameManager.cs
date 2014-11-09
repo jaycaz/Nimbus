@@ -34,7 +34,7 @@ public class EndGameManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        showEndLevelScreen = false;
+        showEndLevelScreen = true;
         showGoodTab = true;
         CursorBehaviour c = GameObject.FindObjectOfType<CursorBehaviour>();
         c.CursorLeftClick += OnCursorLeftClick;
@@ -48,7 +48,7 @@ public class EndGameManager : MonoBehaviour {
         }
 
         //Debug.Log(string.Format("Click: {0}", e.position));
-        Debug.Log(string.Format("bad tab: {0}", badTabRect));
+        //Debug.Log(string.Format("bad tab: {0}", badTabRect));
         if(menuButtonRect.Contains(e.position))
         {
             // TODO: Go to main menu
@@ -118,6 +118,20 @@ public class EndGameManager : MonoBehaviour {
                 GUI.DrawTexture(lightningUpRect, lightningUpTexture);
                 GUI.DrawTexture(sizeUpRect, sizeUpTexture);
             }
+
+            // Display scores
+            ScoreManager scoring = GameObject.FindObjectOfType<ScoreManager>();
+            //scoring.convertLevelScores();
+            Rect goodScoreRect = new Rect(endLevelRect.xMin + endLevelRect.width * (7f / 12f), endLevelRect.yMin + endLevelRect.height * (1f / 4f),
+                endLevelRect.width / 3f, endLevelRect.height / 10f);
+            GUIStyle scoreStyle = new GUIStyle();
+            scoreStyle.fontSize = 100;
+            scoreStyle.normal.textColor = Color.black;
+            GUI.Label(goodScoreRect, string.Format("{0}", scoring.goodPoints), scoreStyle);
+
+
+            Rect badScoreRect = new Rect(goodScoreRect.xMin, goodScoreRect.yMax + goodScoreRect.height / 3f, goodScoreRect.width, goodScoreRect.height);
+            GUI.Label(badScoreRect, string.Format("{0}", scoring.badPoints), scoreStyle);
 
             // Display boxes capturing mouse input
 

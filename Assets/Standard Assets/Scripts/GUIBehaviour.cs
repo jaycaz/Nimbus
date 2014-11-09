@@ -128,6 +128,7 @@ public class GUIBehaviour : MonoBehaviour {
         }
         else if (addCloudRect.Contains(e.position))
         {
+            Debug.Log("GUI calling add cloud!");
             OnTriggerAddCloud();
         }
         //Debug.Log(string.Format("cursor pos: {0}", e.position));
@@ -139,8 +140,10 @@ public class GUIBehaviour : MonoBehaviour {
         GUI.depth = 1;
 
         // Display score
+        GUIStyle scoreStyle = new GUIStyle();
+        scoreStyle.fontSize = 100;
         ScoreManager score = GameObject.FindObjectOfType<ScoreManager>();
-        GUI.Label(new Rect(Screen.width / 3f, Screen.height / 50f, Screen.width / 3f, Screen.height / 20f), string.Format("Score: {0}", score.TotalLevelScore));
+        GUI.Label(new Rect(Screen.width / 3f, Screen.height / 50f, Screen.width / 3f, Screen.height / 20f), string.Format("Score: {0}", score.TotalLevelScore), scoreStyle);
 
         // Start sun animation
         sunRect = new Rect(Screen.width - 100f, Screen.height * (1f/2f), 100, 100);
@@ -188,7 +191,7 @@ public class GUIBehaviour : MonoBehaviour {
         addCloudRect = new Rect(10, 10, addCloudTexture.width, addCloudTexture.height);
         if (GUI.Button(addCloudRect, addCloudTexture, buttonStyle))
         {
-            OnTriggerAddCloud();
+            //OnTriggerAddCloud();
         }
     }
 	

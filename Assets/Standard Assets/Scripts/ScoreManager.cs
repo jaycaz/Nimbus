@@ -43,11 +43,12 @@ public class ScoreManager : MonoBehaviour {
     public int TotalLevelScore { get { return goodPoints + (int)(1.5 * badPoints); } }
     public int convertLevelScores()
     {
+        int levelScore = TotalLevelScore;
+        totalStoredPoints += levelScore;
+
         goodPoints = 0;
         badPoints = 0;
 
-        int levelScore = TotalLevelScore;
-        totalStoredPoints += levelScore;
         return levelScore;
     }
 
@@ -64,8 +65,10 @@ public class ScoreManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        badPoints = 0;
-        goodPoints = 0;
+        if (goodPoints == null)
+            goodPoints = 0;
+        if (badPoints == null)
+            badPoints = 0;
 	}
 	
 	// Update is called once per frame

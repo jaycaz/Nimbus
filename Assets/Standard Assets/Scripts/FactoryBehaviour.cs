@@ -14,11 +14,13 @@ public class FactoryBehaviour : MonoBehaviour {
         //cloudPrefab = GameObject.FindGameObjectWithTag("Cloud");
 
         GUIBehaviour g = GameObject.FindObjectOfType<GUIBehaviour>();
+        Debug.Log("Adding cloud event to factory");
         g.TriggerAddCloud += OnTriggerAddCloud;
 	}
 
     private void OnTriggerAddCloud(object sender, System.EventArgs e)
     {
+        Debug.Log("Trigger Add Cloud");
         Transform spawnPoint = this.transform.FindChild("Cloud_Spawn_Point");
         GameObject cloud = (GameObject)Instantiate(cloudPrefab, spawnPoint.position, spawnPoint.rotation);
         clouds.Add(cloud);
