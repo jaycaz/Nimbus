@@ -19,8 +19,8 @@ public class CloudBehaviour : MonoBehaviour {
     // Use to set how long particles are enabled
     public float rainDuration;
     public float downpourDuration;
-    public float LightningDuration;
-    public float TornadoDuration;
+    public float lightningDuration;
+    public float tornadoDuration;
 
     // Use to time how long a particle has been enabled
     private float deltaTimePassed;
@@ -35,7 +35,7 @@ public class CloudBehaviour : MonoBehaviour {
     ParticleEmitter[] emitters;
     ParticleEmitter rain;
     ParticleEmitter downpour;
-    ParticleEmitter lightning;
+    ParticleSystem lightning;
     ParticleEmitter tornado;
 
     public bool hasDest;
@@ -81,23 +81,22 @@ public class CloudBehaviour : MonoBehaviour {
             {
                 downpour = emitters[i];
             }
-            else if (emitters[i].name == "Lightning")
-            {
-                lightning = emitters[i];
-            }
             else if (emitters[i].name == "Tornado")
             {
                 tornado = emitters[i];
             }
         }
 
+        lightning = this.GetComponentInChildren<ParticleSystem>();
+
         // Intialize active bools
         activeWeather = false;
         isRaining = false;
         rain.emit = false;
-        downpour.emit = false;
         isDownpouring = false;
+        downpour.emit = false;
         isLightning = false;
+        lightning.enableEmission = false;
         isTornado = false;
 
         // Destroy the Particle Emmitters
@@ -181,7 +180,14 @@ public class CloudBehaviour : MonoBehaviour {
 	
     void OnLightning(object sender, EventArgs e)
     {
-        //throw new NotImplementedException();
+        if (!isSelected || activeWeather)
+        {
+            return;
+        }
+        activeWeather = true;
+        isLightning = true;
+        lightning.enableEmission = true;
+        Debug.Log("Zeus-ed!");
     }
 
     void OnTornado(object sender, EventArgs e)
@@ -266,6 +272,17 @@ public class CloudBehaviour : MonoBehaviour {
                     activeWeather = false;
                     deltaTimePassed = 0;
                     Debug.Log("Stop making it downpour...");
+                }
+            }
+            if (isLightning)
+            {
+                if (lightningDuration <= deltaTimePassed)
+                {
+                    isLightning = false;
+                    lightning.enableEmission = false;
+                    activeWeather = false;
+                    deltaTimePassed = 0;
+                    Debug.Log("Stop making striking down cities...");
                 }
             }
         }
