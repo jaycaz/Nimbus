@@ -6,23 +6,26 @@ using RTS;
 public class CloudBehaviour : MonoBehaviour {
 
     public bool isSelected;
-    
+
+    public float rainRate;
+    public float downpourRate;
+
     // Use to see what weather is active
     public bool isRaining;
-    public bool isHeavyRaining;
+    public bool isDownpouring;
     public bool isLightning;
     public bool isTornado;
 
     // Use to set how long particles are enabled
     public float rainDuration;
-    public float heavyRainDuration;
+    public float downpourDuration;
     public float LightningDuration;
     public float TornadoDuration;
 
     // Use to time how long a particle has been enabled
     private float deltaTimePassed;
 
-    private float water;
+    public float water;
     private float initialWater;
     private float initialAlpha;
 
@@ -31,7 +34,7 @@ public class CloudBehaviour : MonoBehaviour {
 
     ParticleEmitter[] emitters;
     ParticleEmitter rain;
-    ParticleEmitter heavyRain;
+    ParticleEmitter downpour;
     ParticleEmitter lightning;
     ParticleEmitter tornado;
 
@@ -74,9 +77,9 @@ public class CloudBehaviour : MonoBehaviour {
             {
                 rain = emitters[i];
             }
-            else if (emitters[i].name == "Heavy Rain")
+            else if (emitters[i].name == "Downpour")
             {
-                heavyRain = emitters[i];
+                downpour = emitters[i];
             }
             else if (emitters[i].name == "Lightning")
             {
@@ -92,15 +95,12 @@ public class CloudBehaviour : MonoBehaviour {
         activeWeather = false;
         isRaining = false;
         rain.emit = false;
-        isHeavyRaining = false;
+        downpour.emit = false;
+        isDownpouring = false;
         isLightning = false;
         isTornado = false;
 
         // Destroy the Particle Emmitters
-
-        rainDuration = 3;
-
-        water = 60;
 
         initialWater = water;
 
@@ -164,12 +164,19 @@ public class CloudBehaviour : MonoBehaviour {
         activeWeather = true;
         isRaining = true;
         rain.emit = true;
-        Debug.Log("Make it rain.");
+        //Debug.Log("Make it rain.");
     }
 
     void OnDownpour(object sender, EventArgs e)
     {
-        //throw new NotImplementedException();
+        if (!isSelected || activeWeather)
+        {
+            return;
+        }
+        activeWeather = true;
+        isDownpouring = true;
+        downpour.emit = true;
+        Debug.Log("MAKE IT RAIN!");
     }
 	
     void OnLightning(object sender, EventArgs e)
@@ -239,13 +246,26 @@ public class CloudBehaviour : MonoBehaviour {
             //Debug.Log(string.Format("deltaTimePassed: {0}", deltaTimePassed));
             if (isRaining)
             {
+                water -= Time.deltaTime * rainRate;
                 if (rainDuration <= deltaTimePassed)
                 {
                     isRaining = false;
                     rain.emit = false;
                     activeWeather = false;
                     deltaTimePassed = 0;
-                    Debug.Log("Stop making it rain...");
+                    //Debug.Log("Stop making it rain...");
+                }
+            }
+            if (isDownpouring)
+            {
+                water -= Time.deltaTime * downpourRate;
+                if (downpourDuration <= deltaTimePassed)
+                {
+                    isDownpouring = false;
+                    downpour.emit = false;
+                    activeWeather = false;
+                    deltaTimePassed = 0;
+                    Debug.Log("Stop making it downpour...");
                 }
             }
         }
