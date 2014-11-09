@@ -48,6 +48,7 @@ public class CityListeners : MonoBehaviour {
 
     private bool isDusting;
     private bool isFlooding;
+    private bool lightningDestroy;
 
     private ScoreManager scoring;
 
@@ -80,6 +81,7 @@ public class CityListeners : MonoBehaviour {
 
         // Set up connection to score manager
         scoring = GameObject.FindObjectOfType<ScoreManager>();
+        lightningDestroy = false;
 	}
 	
 	// Update is called once per frame
@@ -144,6 +146,34 @@ public class CityListeners : MonoBehaviour {
             //Debug.Log("ITS RAINING IN THE CITY!");
             cloudChangeWaterLevel(cloud.downpourRate * Time.deltaTime);
         }
+        else if (cloud.isLightning && !lightningDestroy)
+        {
+            //Debug.Log("ITS RAINING IN THE CITY!");
+            waterLevel -= 1;
+            bool buildingFound = false;
+            GameObject building = null;
+
+            for (int i = 0; i <= this.gameObject.transform.childCount; i++)
+            {
+                building = this.gameObject.transform.GetChild(0).gameObject;
+                if (building.name != "Dust" && building.name != "Flood" && building.name != "GUI Text")
+                {
+                    buildingFound = true;
+                    break;
+                }
+            }
+            if (buildingFound)
+            {
+                lightningDestroy = true;
+                Destroy(building);
+            }
+            else
+            {
+                lightningDestroy = true;
+                Destroy(this.gameObject);
+            }
+            
+        }
     }
 
     void OnTriggerStay(Collider other)
@@ -160,6 +190,36 @@ public class CityListeners : MonoBehaviour {
         {
             //Debug.Log("ITS RAINING IN THE CITY!");
             cloudChangeWaterLevel(cloud.downpourRate * Time.deltaTime);
+        }
+        else if (cloud.isLightning && !lightningDestroy)
+        {
+            //Debug.Log("ITS RAINING IN THE CITY!");
+            waterLevel -= 1;
+            bool buildingFound = false;
+            GameObject building = null;
+
+            for (int i = 0; i <= this.gameObject.transform.GetChildCount(); i++)
+            {
+                building = this.gameObject.transform.GetChild(0).gameObject;
+                if (building.name != "Dust" && building.name != "Flood" && building.name != "GUI Text")
+                {
+                    buildingFound = true;
+                    break;
+                }
+            }
+            if (buildingFound)
+            {
+                lightningDestroy = true;
+                Destroy(building);
+
+            }
+            else
+            {
+                lightningDestroy = true;
+                Destroy(this.gameObject);
+
+            }
+
         }
     }
 
