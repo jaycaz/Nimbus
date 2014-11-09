@@ -129,6 +129,8 @@ public class GUIBehaviour : MonoBehaviour {
         else if (addCloudRect.Contains(e.position))
         {
             Debug.Log("GUI calling add cloud!");
+            AudioSource audio = GetComponent<AudioSource>();
+            audio.Play();
             OnTriggerAddCloud();
         }
         //Debug.Log(string.Format("cursor pos: {0}", e.position));
