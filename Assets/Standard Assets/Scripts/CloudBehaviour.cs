@@ -152,18 +152,19 @@ public class CloudBehaviour : MonoBehaviour {
             Debug.DrawRay(this.transform.position, this.transform.forward, Color.blue, 10000f);
             Debug.DrawRay(this.transform.position, cloudToDest, Color.red, 10000f);
 
-            Vector3 newRotation = Vector3.RotateTowards(cloudForward, cloudToDest, Mathf.Infinity, Mathf.Infinity);
+            Vector3 newRotation = Vector3.RotateTowards(cloudForward, cloudToDest, 
+                ResourceManager.CloudAutoTurnSpeed * Time.deltaTime, Mathf.Infinity);
             this.transform.rotation = Quaternion.LookRotation(newRotation);
         }
 
         // Control cloud rotation
         if (Input.GetKey("a"))
         {
-            this.transform.Rotate(Vector3.up, (-1) * ResourceManager.CloudTurnSpeed * Time.deltaTime);
+            this.transform.Rotate(Vector3.up, (-1) * ResourceManager.CloudManualTurnSpeed * Time.deltaTime);
         }
         if (Input.GetKey("d"))
         {
-            this.transform.Rotate(Vector3.up, ResourceManager.CloudTurnSpeed * Time.deltaTime);
+            this.transform.Rotate(Vector3.up, ResourceManager.CloudManualTurnSpeed * Time.deltaTime);
         }
 
         // Control cloud spotlight
