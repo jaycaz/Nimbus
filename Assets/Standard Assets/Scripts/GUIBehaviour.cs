@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System;
 using System.Collections;
 
 [System.Serializable]
@@ -19,6 +20,16 @@ public class GUIBehaviour : MonoBehaviour {
     private Rect lightningRect;
     private Rect tornadoRect;
     private Rect sunRect;
+
+    public delegate void RainHandler(object sender, EventArgs e);
+    public delegate void DownpourHandler(object sender, EventArgs e);
+    public delegate void LightningHandler(object sender, EventArgs e);
+    public delegate void TornadoHandler(object sender, EventArgs e);
+
+    public event RainHandler TriggerRain;
+    public event DownpourHandler TriggerDownpour;
+    public event LightningHandler TriggerLightning;
+    public event TornadoHandler TriggerTornado;
     
     public enum Ability
     {
@@ -39,23 +50,67 @@ public class GUIBehaviour : MonoBehaviour {
         c.CursorLeftClick += OnCursorLeftClick;
 	}
 
+    private void OnTriggerRain()
+    {
+        abilitySelected = Ability.Rain;
+
+        RainHandler handler = TriggerRain;
+        if(handler != null)
+        {
+            handler(this, new EventArgs());
+        }
+    }
+
+    private void OnTriggerDownpour()
+    {
+        abilitySelected = Ability.Downpour;
+
+        DownpourHandler handler = TriggerDownpour;
+        if (handler != null)
+        {
+            handler(this, new EventArgs());
+        }
+    }
+
+    private void OnTriggerLightning()
+    {
+        abilitySelected = Ability.Lightning;
+
+        LightningHandler handler = TriggerLightning;
+        if (handler != null)
+        {
+            handler(this, new EventArgs());
+        }
+    }
+
+    private void OnTriggerTornado()
+    {
+        abilitySelected = Ability.Tornado;
+
+        TornadoHandler handler = TriggerTornado;
+        if (handler != null)
+        {
+            handler(this, new EventArgs());
+        }
+    }
+
     private void OnCursorLeftClick(object sender, CursorClickEventArgs e)
     {
         if(rainRect.Contains(e.position))
         {
-            abilitySelected = Ability.Rain;
+            OnTriggerRain();
         }
         else if (downpourRect.Contains(e.position))
         {
-            abilitySelected = Ability.Downpour;
+            OnTriggerDownpour();
         }
         else if (lightningRect.Contains(e.position))
         {
-            abilitySelected = Ability.Lightning;
+            OnTriggerLightning();
         }
         else if (tornadoRect.Contains(e.position))
         {
-            abilitySelected = Ability.Tornado;
+            OnTriggerTornado();
         }
     }
 
@@ -87,22 +142,22 @@ public class GUIBehaviour : MonoBehaviour {
         // Cycle through abilities using number keys
         if (GUI.Button(rainRect, rainImage, buttonStyle) || Input.GetKeyDown("1"))
         {
-            abilitySelected = Ability.Rain;
+            OnTriggerRain();
         }
 
         if (GUI.Button(downpourRect, downpourImage, buttonStyle) || Input.GetKeyDown("2"))
         {
-            abilitySelected = Ability.Downpour;
+            OnTriggerDownpour();
         }
 
         if (GUI.Button(lightningRect, lightningImage, buttonStyle) || Input.GetKeyDown("3"))
         {
-            abilitySelected = Ability.Lightning;
+            OnTriggerLightning();
         }
 
         if (GUI.Button(tornadoRect, tornadoImage, buttonStyle) || Input.GetKeyDown("4"))
         {
-            abilitySelected = Ability.Tornado;
+            OnTriggerTornado();
         }
     }
 	

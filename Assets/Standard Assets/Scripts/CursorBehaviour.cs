@@ -50,7 +50,8 @@ public class CursorBehaviour : MonoBehaviour {
         ypos = Mathf.Max(0f, ypos);
         ypos = Mathf.Min(Screen.height, ypos);
 
-        GUI.DrawTexture(new Rect(xpos, ypos, 50.0f, 50.0f), cursorTexture, ScaleMode.StretchToFill, true, 10.0F);
+        GUI.DrawTexture(new Rect(xpos, ypos, 25f, 40f), 
+            cursorTexture, ScaleMode.StretchToFill, true, 10.0F);
 
         // Left mouse click
         if (Input.GetMouseButtonDown(0))

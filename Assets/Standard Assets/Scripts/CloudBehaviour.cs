@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 using RTS;
 
 public class CloudBehaviour : MonoBehaviour {
@@ -34,30 +35,38 @@ public class CloudBehaviour : MonoBehaviour {
     ParticleEmitter lightning;
     ParticleEmitter tornado;
 
-    ParticleEmitter rainClone;
-    ParticleEmitter heavyRainClone;
-    ParticleEmitter lightningClone;
-    ParticleEmitter tornadoClone;
-
     public bool hasDest;
     public Vector3 destination;
     public GameObject moveToObject;
     public Sprite rightClickSprite;
+    public RuntimeAnimatorController animController;
 
 	// Use this for initialization
 	void Start () {
         isSelected = false;
         destination = new Vector3();
+
+
+        // Initialize game object to show "move here" animation
         moveToObject = new GameObject("Move To Light");
         moveToObject.AddComponent<SpriteRenderer>();
+        moveToObject.AddComponent<Animator>();
         moveToObject.transform.Rotate(new Vector3(90f, 0f, 0f));
         SpriteRenderer moveToSprite = moveToObject.GetComponent<SpriteRenderer>();
+        Animator spriteAnimator = moveToObject.GetComponent<Animator>();
+        spriteAnimator.runtimeAnimatorController = animController;
         moveToSprite.sprite = rightClickSprite;
         moveToObject.SetActive(false);
 
         CursorBehaviour c = GameObject.FindObjectOfType<CursorBehaviour>();
         c.CursorLeftClick += OnCursorLeftClick;
         c.CursorRightClick += OnCursorRightClick;
+
+        GUIBehaviour g = GameObject.FindObjectOfType<GUIBehaviour>();
+        g.TriggerRain += OnRain;
+        g.TriggerDownpour += OnDownpour;
+        g.TriggerLightning += OnLightning;
+        g.TriggerTornado += OnTornado;
 
         //Get all the Particle Emitters
         emitters = this.GetComponentsInChildren<ParticleEmitter>();
@@ -86,12 +95,12 @@ public class CloudBehaviour : MonoBehaviour {
         // Intialize active bools
         activeWeather = false;
         isRaining = false;
+        rain.emit = false;
         isHeavyRaining = false;
         isLightning = false;
         isTornado = false;
 
         // Destroy the Particle Emmitters
-        //rain.enabled = false;
 
         rainDuration = 3;
 
@@ -127,24 +136,55 @@ public class CloudBehaviour : MonoBehaviour {
 
     private void OnCursorRightClick(object sender, CursorClickEventArgs e)
     {
-        RaycastHit raycastInfo;
+        RaycastHit[] raycastInfo;
         Ray cursorRay = Camera.main.ScreenPointToRay(new Vector3(e.position.x, Screen.height - e.position.y, 0));
         //Debug.DrawRay(cursorRay.origin, cursorRay.direction * 1000, Color.red, 10000f);
-        bool rayCollides = Physics.Raycast(cursorRay, out raycastInfo, Mathf.Infinity);
-        if (rayCollides)
+        
+        raycastInfo = Physics.RaycastAll(cursorRay, Mathf.Infinity);
+        if (isSelected && raycastInfo.Length != 0)
         {
-            if (isSelected && raycastInfo.collider.gameObject.tag == "Terrain")
+            foreach(RaycastHit hit in raycastInfo)
             {
-                //Debug.Log(string.Format("Right click ray collides with terrain at point {0}", raycastInfo.point));
-                moveToObject.transform.position = raycastInfo.point - new Vector3(-5f, 0f, 0f);
-                moveToObject.SetActive(true);
-                destination = moveToObject.transform.position;
-                hasDest = true;
+                if (hit.collider.gameObject.tag == "Terrain")
+                {
+                    //Debug.Log(string.Format("Right click ray collides with terrain at point {0}", raycastInfo.point));
+                    moveToObject.transform.position = hit.point - new Vector3(0f, -10f, 0f);
+                    moveToObject.SetActive(true);
+                    destination = moveToObject.transform.position;
+                    hasDest = true;
+                    break;
+                }
             }
+            
         }
     }
+
+    void OnRain(object sender, EventArgs e)
+    {
+        if (activeWeather)
+            return;
+        activeWeather = true;
+        isRaining = true;
+        rain.emit = isRaining;
+        Debug.Log("Make it rain.");
+    }
+
+    void OnDownpour(object sender, EventArgs e)
+    {
+        //throw new NotImplementedException();
+    }
 	
-	// Update is called once per frame
+    void OnLightning(object sender, EventArgs e)
+    {
+        //throw new NotImplementedException();
+    }
+
+    void OnTornado(object sender, EventArgs e)
+    {
+        //throw new NotImplementedException();
+    }
+
+    // Update is called once per frame
 	void Update () {
 
         // Water decreaases with time
@@ -169,43 +209,33 @@ public class CloudBehaviour : MonoBehaviour {
             Vector3 cloudForward = this.transform.forward;
             Vector3 cloudToDest = destination - this.transform.position;
             cloudToDest.y = 0.0f;
-            Debug.Log(string.Format("cloudforward: {0}", cloudForward));
-            Debug.Log(string.Format("cloudtodest: {0}", cloudToDest));
+            //Debug.Log(string.Format("cloudforward: {0}", cloudForward));
+            //Debug.Log(string.Format("cloudtodest: {0}", cloudToDest));
             
             Debug.DrawRay(this.transform.position, this.transform.forward, Color.blue, 10000f);
             Debug.DrawRay(this.transform.position, cloudToDest, Color.red, 10000f);
 
-            Vector3 newRotation = Vector3.RotateTowards(cloudForward, cloudToDest, Mathf.Infinity, Mathf.Infinity);
+            Vector3 newRotation = Vector3.RotateTowards(cloudForward, cloudToDest, 
+                ResourceManager.CloudAutoTurnSpeed * Time.deltaTime, Mathf.Infinity);
             this.transform.rotation = Quaternion.LookRotation(newRotation);
         }
 
         // Control cloud rotation
         if (Input.GetKey("a"))
         {
-            this.transform.Rotate(Vector3.up, (-1) * ResourceManager.CloudTurnSpeed * Time.deltaTime);
+            this.transform.Rotate(Vector3.up, (-1) * ResourceManager.CloudManualTurnSpeed * Time.deltaTime);
         }
         if (Input.GetKey("d"))
         {
-            this.transform.Rotate(Vector3.up, ResourceManager.CloudTurnSpeed * Time.deltaTime);
+            this.transform.Rotate(Vector3.up, ResourceManager.CloudManualTurnSpeed * Time.deltaTime);
         }
 
         // Control cloud spotlight
         Light groundLight = this.GetComponentInChildren<Light>();
         groundLight.enabled = isSelected;
 
-        if (!activeWeather)
-        {
-            if (Input.GetKey("1"))
-            {
-                rainClone = (ParticleEmitter)Instantiate(rain, rain.transform.position, rain.transform.rotation);
-                rainClone.transform.parent = rain.transform.parent;
-                rainClone.enabled = true;
-                activeWeather = true;
-                isRaining = true;
-                Debug.Log("Make it rain.");
-            }
-        }
-        else
+
+        if (activeWeather)
         {
             deltaTimePassed += Time.deltaTime;
             Debug.Log(string.Format("deltaTimePassed: {0}", deltaTimePassed));
@@ -213,8 +243,8 @@ public class CloudBehaviour : MonoBehaviour {
             {
                 if (rainDuration <= deltaTimePassed)
                 {
-                    Destroy(rainClone);
                     isRaining = false;
+                    rain.emit = isRaining;
                     activeWeather = false;
                     deltaTimePassed = 0;
                     Debug.Log("Stop making it rain...");
