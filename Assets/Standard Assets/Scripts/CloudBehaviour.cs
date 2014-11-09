@@ -126,20 +126,26 @@ public class CloudBehaviour : MonoBehaviour {
 
     private void OnCursorRightClick(object sender, CursorClickEventArgs e)
     {
-        RaycastHit raycastInfo;
+        RaycastHit[] raycastInfo;
         Ray cursorRay = Camera.main.ScreenPointToRay(new Vector3(e.position.x, Screen.height - e.position.y, 0));
         //Debug.DrawRay(cursorRay.origin, cursorRay.direction * 1000, Color.red, 10000f);
-        bool rayCollides = Physics.Raycast(cursorRay, out raycastInfo, Mathf.Infinity);
-        if (rayCollides)
+        
+        raycastInfo = Physics.RaycastAll(cursorRay, Mathf.Infinity);
+        if (isSelected && raycastInfo.Length != 0)
         {
-            if (isSelected && raycastInfo.collider.gameObject.tag == "Terrain")
+            foreach(RaycastHit hit in raycastInfo)
             {
-                //Debug.Log(string.Format("Right click ray collides with terrain at point {0}", raycastInfo.point));
-                moveToObject.transform.position = raycastInfo.point - new Vector3(0f, -10f, 0f);
-                moveToObject.SetActive(true);
-                destination = moveToObject.transform.position;
-                hasDest = true;
+                if (hit.collider.gameObject.tag == "Terrain")
+                {
+                    //Debug.Log(string.Format("Right click ray collides with terrain at point {0}", raycastInfo.point));
+                    moveToObject.transform.position = hit.point - new Vector3(0f, -10f, 0f);
+                    moveToObject.SetActive(true);
+                    destination = moveToObject.transform.position;
+                    hasDest = true;
+                    break;
+                }
             }
+            
         }
     }
 
