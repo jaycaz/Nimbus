@@ -56,7 +56,7 @@ public class CityListeners : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         waterLevel -= waterConsumptionRate * Time.deltaTime;
-        Debug.Log(string.Format("waterLevel: {0}", waterLevel));
+        //Debug.Log(string.Format("waterLevel: {0}", waterLevel));
         if (waterLevel <= lowWaterLevel)
         {
             isDusting = true;

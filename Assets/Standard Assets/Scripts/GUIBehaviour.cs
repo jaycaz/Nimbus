@@ -136,7 +136,7 @@ public class GUIBehaviour : MonoBehaviour {
 
     void OnGUI()
     {
-        GUI.depth = 0;
+        GUI.depth = 1;
 
         // Start sun animation
         sunRect = new Rect(Screen.width - 100f, Screen.height * (1f/2f), 100, 100);
