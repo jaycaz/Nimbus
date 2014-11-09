@@ -6468,10 +6468,34 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1500000, guid: 4b31b1caadab1ee4b8606c9f35713992, type: 2}
       propertyPath: minEmission
-      value: 5
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 1500000, guid: 4b31b1caadab1ee4b8606c9f35713992, type: 2}
       propertyPath: maxEmission
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1500000, guid: 4b31b1caadab1ee4b8606c9f35713992, type: 2}
+      propertyPath: maxEnergy
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1500000, guid: 4b31b1caadab1ee4b8606c9f35713992, type: 2}
+      propertyPath: minEnergy
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1500000, guid: 4b31b1caadab1ee4b8606c9f35713992, type: 2}
+      propertyPath: m_Ellipsoid.x
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1500000, guid: 4b31b1caadab1ee4b8606c9f35713992, type: 2}
+      propertyPath: m_Ellipsoid.z
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1500000, guid: 4b31b1caadab1ee4b8606c9f35713992, type: 2}
+      propertyPath: maxSize
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1500000, guid: 4b31b1caadab1ee4b8606c9f35713992, type: 2}
+      propertyPath: minSize
       value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -27857,6 +27881,9 @@ GameObject:
   - 15: {fileID: 1523849509}
   - 12: {fileID: 1523849508}
   - 26: {fileID: 1523849507}
+  - 114: {fileID: 1523849511}
+  - 54: {fileID: 1523849513}
+  - 64: {fileID: 1523849512}
   m_Layer: 0
   m_Name: Smog
   m_TagString: Smog
@@ -27936,11 +27963,11 @@ EllipsoidParticleEmitter:
   serializedVersion: 2
   m_Enabled: 1
   m_Emit: 1
-  minSize: 1
-  maxSize: 2.25
-  minEnergy: 10
-  maxEnergy: 10
-  minEmission: 5
+  minSize: 10
+  maxSize: 10
+  minEnergy: 2
+  maxEnergy: 5
+  minEmission: 10
   maxEmission: 10
   worldVelocity: {x: 0, y: 0, z: 0}
   localVelocity: {x: 0, y: 0, z: 0}
@@ -27952,7 +27979,7 @@ EllipsoidParticleEmitter:
   rndRotation: 1
   Simulate in Worldspace?: 1
   m_OneShot: 0
-  m_Ellipsoid: {x: 1.10000002, y: 0, z: 1.10000002}
+  m_Ellipsoid: {x: 10, y: 0, z: 10}
   m_MinEmitterRange: 0
 --- !u!4 &1523849510
 Transform:
@@ -27966,6 +27993,45 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 1
+--- !u!114 &1523849511
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1523849506}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e793e392eab67ad4d87cc58c45d5b7f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!64 &1523849512
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1523849506}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_SmoothSphereCollisions: 0
+  m_Convex: 1
+  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!54 &1523849513
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1523849506}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: .0500000007
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 2
 --- !u!1001 &1530474898
 Prefab:
   m_ObjectHideFlags: 0
