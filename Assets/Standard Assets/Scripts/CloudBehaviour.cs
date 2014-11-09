@@ -196,7 +196,7 @@ public class CloudBehaviour : MonoBehaviour {
         this.renderer.material.SetColor("_TintColor", newColor);
         if (water < 0)
         {
-            Destroy(this);
+            Destroy(this.gameObject);
         }
 
         // Cloud movement: always moves forward by default
