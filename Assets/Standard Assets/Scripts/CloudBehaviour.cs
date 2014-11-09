@@ -37,9 +37,9 @@ public class CloudBehaviour : MonoBehaviour {
 
     public bool hasDest;
     public Vector3 destination;
-    public GameObject moveToObject;
-    public Sprite rightClickSprite;
-    public RuntimeAnimatorController animController;
+    public GameObject markerPrefab;
+    private GameObject moveToMarker;
+    private MoveToMarkerBehaviour moveToMarkerScript;
 
 	// Use this for initialization
 	void Start () {
@@ -48,16 +48,11 @@ public class CloudBehaviour : MonoBehaviour {
 
 
         // Initialize game object to show "move here" animation
-        moveToObject = new GameObject("Move To Light");
-        moveToObject.AddComponent<SpriteRenderer>();
-        moveToObject.AddComponent<Animator>();
-        moveToObject.transform.Rotate(new Vector3(90f, 0f, 0f));
-        moveToObject.transform.localScale = new Vector3(5f, 5f, 5f);
-        SpriteRenderer moveToSprite = moveToObject.GetComponent<SpriteRenderer>();
-        Animator spriteAnimator = moveToObject.GetComponent<Animator>();
-        spriteAnimator.runtimeAnimatorController = animController;
-        moveToSprite.sprite = rightClickSprite;
-        moveToObject.SetActive(false);
+        moveToMarker = (GameObject)Instantiate(markerPrefab);
+        moveToMarkerScript = moveToMarker.GetComponent<MoveToMarkerBehaviour>();
+        //SpriteRenderer moveToSprite = moveToMarker.GetComponent<SpriteRenderer>();
+        //Animator spriteAnimator = moveToMarker.GetComponent<Animator>();
+        moveToMarker.SetActive(false);
 
         CursorBehaviour c = GameObject.FindObjectOfType<CursorBehaviour>();
         c.CursorLeftClick += OnCursorLeftClick;
@@ -149,9 +144,9 @@ public class CloudBehaviour : MonoBehaviour {
                 if (hit.collider.gameObject.tag == "Terrain")
                 {
                     //Debug.Log(string.Format("Right click ray collides with terrain at point {0}", raycastInfo.point));
-                    moveToObject.transform.position = hit.point + new Vector3(0f, 5f, 0f);
-                    moveToObject.SetActive(true);
-                    destination = moveToObject.transform.position;
+                    moveToMarker.transform.position = hit.point + new Vector3(0f, 5f, 0f);
+                    destination = moveToMarker.transform.position;
+                    moveToMarkerScript.animate();
                     hasDest = true;
                     break;
                 }

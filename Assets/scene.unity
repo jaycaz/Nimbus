@@ -4253,7 +4253,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 17
+  m_RootOrder: 19
 --- !u!1001 &229591171
 Prefab:
   m_ObjectHideFlags: 0
@@ -4291,7 +4291,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 69189b74672a859479721f310f6bc3d6, type: 3}
       propertyPath: m_RootOrder
-      value: 19
+      value: 18
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 69189b74672a859479721f310f6bc3d6, type: 3}
       propertyPath: m_LocalPosition.x
@@ -5791,6 +5791,18 @@ Prefab:
       propertyPath: m_RootOrder
       value: 14
       objectReference: {fileID: 0}
+    - target: {fileID: 1500000, guid: 25bcae1fab235964f8d438619be4d51e, type: 2}
+      propertyPath: maxEmission
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1500000, guid: 25bcae1fab235964f8d438619be4d51e, type: 2}
+      propertyPath: minEmission
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: 25bcae1fab235964f8d438619be4d51e, type: 2}
+      propertyPath: markerPrefab
+      value: 
+      objectReference: {fileID: 100000, guid: daec72e5469619e4a81856099c5b1b8c, type: 2}
     m_RemovedComponents:
     - {fileID: 5400000, guid: 25bcae1fab235964f8d438619be4d51e, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 25bcae1fab235964f8d438619be4d51e, type: 2}
@@ -9969,8 +9981,8 @@ EllipsoidParticleEmitter:
   maxSize: 2
   minEnergy: 10
   maxEnergy: 10
-  minEmission: 50
-  maxEmission: 70
+  minEmission: 5
+  maxEmission: 10
   worldVelocity: {x: 0, y: 0, z: 0}
   localVelocity: {x: 0, y: 0, z: 0}
   rndVelocity: {x: .00999999978, y: .00999999978, z: .00999999978}
@@ -10021,9 +10033,7 @@ MonoBehaviour:
   TornadoDuration: 0
   hasDest: 0
   destination: {x: 0, y: 0, z: 0}
-  moveToObject: {fileID: 0}
-  rightClickSprite: {fileID: 21300000, guid: e06a5b0204b944b45a0e49da1c4bd30c, type: 3}
-  animController: {fileID: 9100000, guid: 8672fc2a5769e2944839751314cf951d, type: 2}
+  markerPrefab: {fileID: 100000, guid: daec72e5469619e4a81856099c5b1b8c, type: 2}
 --- !u!136 &662387873
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -11555,7 +11565,7 @@ Transform:
   - {fileID: 688558557}
   - {fileID: 880337079}
   m_Father: {fileID: 0}
-  m_RootOrder: 19
+  m_RootOrder: 18
 --- !u!95 &773227821
 Animator:
   serializedVersion: 3
@@ -31182,7 +31192,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 0ae57a1e89818d34384c01baf64170f6, type: 3}
       propertyPath: m_RootOrder
-      value: 18
+      value: 17
       objectReference: {fileID: 0}
     - target: {fileID: 400006, guid: 0ae57a1e89818d34384c01baf64170f6, type: 3}
       propertyPath: m_LocalPosition.x
@@ -31536,7 +31546,7 @@ Transform:
   - {fileID: 616976653}
   - {fileID: 2062471634}
   m_Father: {fileID: 0}
-  m_RootOrder: 18
+  m_RootOrder: 17
 --- !u!95 &2034403098
 Animator:
   serializedVersion: 3
