@@ -39,15 +39,22 @@ public class CloudBehaviour : MonoBehaviour {
     public Vector3 destination;
     public GameObject moveToObject;
     public Sprite rightClickSprite;
+    public RuntimeAnimatorController animController;
 
 	// Use this for initialization
 	void Start () {
         isSelected = false;
         destination = new Vector3();
+
+
+        // Initialize game object to show "move here" animation
         moveToObject = new GameObject("Move To Light");
         moveToObject.AddComponent<SpriteRenderer>();
+        moveToObject.AddComponent<Animator>();
         moveToObject.transform.Rotate(new Vector3(90f, 0f, 0f));
         SpriteRenderer moveToSprite = moveToObject.GetComponent<SpriteRenderer>();
+        Animator spriteAnimator = moveToObject.GetComponent<Animator>();
+        spriteAnimator.runtimeAnimatorController = animController;
         moveToSprite.sprite = rightClickSprite;
         moveToObject.SetActive(false);
 
@@ -125,7 +132,7 @@ public class CloudBehaviour : MonoBehaviour {
             if (isSelected && raycastInfo.collider.gameObject.tag == "Terrain")
             {
                 //Debug.Log(string.Format("Right click ray collides with terrain at point {0}", raycastInfo.point));
-                moveToObject.transform.position = raycastInfo.point - new Vector3(-5f, 0f, 0f);
+                moveToObject.transform.position = raycastInfo.point - new Vector3(0f, -10f, 0f);
                 moveToObject.SetActive(true);
                 destination = moveToObject.transform.position;
                 hasDest = true;
@@ -146,8 +153,8 @@ public class CloudBehaviour : MonoBehaviour {
             Vector3 cloudForward = this.transform.forward;
             Vector3 cloudToDest = destination - this.transform.position;
             cloudToDest.y = 0.0f;
-            Debug.Log(string.Format("cloudforward: {0}", cloudForward));
-            Debug.Log(string.Format("cloudtodest: {0}", cloudToDest));
+            //Debug.Log(string.Format("cloudforward: {0}", cloudForward));
+            //Debug.Log(string.Format("cloudtodest: {0}", cloudToDest));
             
             Debug.DrawRay(this.transform.position, this.transform.forward, Color.blue, 10000f);
             Debug.DrawRay(this.transform.position, cloudToDest, Color.red, 10000f);
