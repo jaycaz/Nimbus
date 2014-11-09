@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 using RTS;
 
 public class CloudBehaviour : MonoBehaviour {
@@ -61,6 +62,12 @@ public class CloudBehaviour : MonoBehaviour {
         CursorBehaviour c = GameObject.FindObjectOfType<CursorBehaviour>();
         c.CursorLeftClick += OnCursorLeftClick;
         c.CursorRightClick += OnCursorRightClick;
+
+        GUIBehaviour g = GameObject.FindObjectOfType<GUIBehaviour>();
+        g.TriggerRain += OnRain;
+        g.TriggerDownpour += OnDownpour;
+        g.TriggerLightning += OnLightning;
+        g.TriggerTornado += OnTornado;
 
         //Get all the Particle Emitters
         emitters = this.GetComponentsInChildren<ParticleEmitter>();
@@ -139,8 +146,36 @@ public class CloudBehaviour : MonoBehaviour {
             }
         }
     }
+
+    void OnRain(object sender, EventArgs e)
+    {
+        if (activeWeather)
+            return;
+
+        rainClone = (ParticleEmitter)Instantiate(rain, rain.transform.position, rain.transform.rotation);
+        rainClone.transform.parent = rain.transform.parent;
+        rainClone.enabled = true;
+        activeWeather = true;
+        isRaining = true;
+        Debug.Log("Make it rain.");
+    }
+
+    void OnDownpour(object sender, EventArgs e)
+    {
+        //throw new NotImplementedException();
+    }
 	
-	// Update is called once per frame
+    void OnLightning(object sender, EventArgs e)
+    {
+        //throw new NotImplementedException();
+    }
+
+    void OnTornado(object sender, EventArgs e)
+    {
+        //throw new NotImplementedException();
+    }
+
+    // Update is called once per frame
 	void Update () {
 
         // Cloud movement: always moves forward by default
@@ -178,19 +213,8 @@ public class CloudBehaviour : MonoBehaviour {
         Light groundLight = this.GetComponentInChildren<Light>();
         groundLight.enabled = isSelected;
 
-        if (!activeWeather)
-        {
-            if (Input.GetKey("1"))
-            {
-                rainClone = (ParticleEmitter)Instantiate(rain, rain.transform.position, rain.transform.rotation);
-                rainClone.transform.parent = rain.transform.parent;
-                rainClone.enabled = true;
-                activeWeather = true;
-                isRaining = true;
-                Debug.Log("Make it rain.");
-            }
-        }
-        else
+
+        if (activeWeather)
         {
             deltaTimePassed += Time.deltaTime;
             Debug.Log(string.Format("deltaTimePassed: {0}", deltaTimePassed));
