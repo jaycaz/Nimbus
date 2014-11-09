@@ -203,6 +203,14 @@ public class CloudBehaviour : MonoBehaviour {
         Vector3 forward = transform.TransformDirection(Vector3.forward * ResourceManager.CloudMoveSpeed * Time.deltaTime);
         this.transform.position += forward;
 
+        // If not at ideal elevation, rise towards it
+        Vector3 targetPoint = this.transform.position;
+        targetPoint.y = ResourceManager.CloudHeight;
+        Vector3 up = Vector3.MoveTowards(this.transform.position, targetPoint, ResourceManager.CloudMoveSpeed * Time.deltaTime);
+        //Debug.Log(up);
+
+        this.transform.position = up;
+
         // If there is a destination, head towards it
         if(hasDest)
         {
@@ -238,7 +246,7 @@ public class CloudBehaviour : MonoBehaviour {
         if (activeWeather)
         {
             deltaTimePassed += Time.deltaTime;
-            Debug.Log(string.Format("deltaTimePassed: {0}", deltaTimePassed));
+            //Debug.Log(string.Format("deltaTimePassed: {0}", deltaTimePassed));
             if (isRaining)
             {
                 if (rainDuration <= deltaTimePassed)
