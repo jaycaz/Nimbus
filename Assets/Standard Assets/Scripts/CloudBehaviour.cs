@@ -123,7 +123,7 @@ public class CloudBehaviour : MonoBehaviour {
         bool rayCollides = Physics.Raycast(cursorRay, out raycastInfo, Mathf.Infinity);
         if (rayCollides)
         {            
-            if (raycastInfo.collider.gameObject == this.gameObject)
+            if (this != null && raycastInfo.collider.gameObject == this.gameObject)
             {
                 //Debug.Log(string.Format("Ray collides with cloud at point {0}", raycastInfo.point));
                 isSelected = true;
@@ -162,11 +162,13 @@ public class CloudBehaviour : MonoBehaviour {
 
     void OnRain(object sender, EventArgs e)
     {
-        if (activeWeather)
+        if (!isSelected || activeWeather)
+        {
             return;
+        }
         activeWeather = true;
         isRaining = true;
-        rain.emit = isRaining;
+        rain.emit = true;
         Debug.Log("Make it rain.");
     }
 
@@ -212,6 +214,7 @@ public class CloudBehaviour : MonoBehaviour {
 
         this.transform.position = up;
 
+
         // If there is a destination, head towards it
         if(hasDest)
         {
@@ -229,21 +232,12 @@ public class CloudBehaviour : MonoBehaviour {
             this.transform.rotation = Quaternion.LookRotation(newRotation);
         }
 
-        // Control cloud rotation
-        if (Input.GetKey("a"))
-        {
-            this.transform.Rotate(Vector3.up, (-1) * ResourceManager.CloudManualTurnSpeed * Time.deltaTime);
-        }
-        if (Input.GetKey("d"))
-        {
-            this.transform.Rotate(Vector3.up, ResourceManager.CloudManualTurnSpeed * Time.deltaTime);
-        }
 
         // Control cloud spotlight
         Light groundLight = this.GetComponentInChildren<Light>();
         groundLight.enabled = isSelected;
-
-
+        
+        // Check if weather should stop
         if (activeWeather)
         {
             deltaTimePassed += Time.deltaTime;
@@ -253,11 +247,25 @@ public class CloudBehaviour : MonoBehaviour {
                 if (rainDuration <= deltaTimePassed)
                 {
                     isRaining = false;
-                    rain.emit = isRaining;
+                    rain.emit = false;
                     activeWeather = false;
                     deltaTimePassed = 0;
                     Debug.Log("Stop making it rain...");
                 }
+            }
+        }
+
+        // Code past here should only execute if the cloud is selected
+        if (isSelected)
+        {
+            // Control cloud rotation
+            if (Input.GetKey("a"))
+            {
+                this.transform.Rotate(Vector3.up, (-1) * ResourceManager.CloudManualTurnSpeed * Time.deltaTime);
+            }
+            if (Input.GetKey("d"))
+            {
+                this.transform.Rotate(Vector3.up, ResourceManager.CloudManualTurnSpeed * Time.deltaTime);
             }
         }
 	}
