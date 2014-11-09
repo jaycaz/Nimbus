@@ -4652,6 +4652,7 @@ MonoBehaviour:
   m_LightmapIndex: -1
   m_LightmapSize: 1024
   m_DrawTreesAndFoliage: 1
+  m_CollectDetailPatches: 1
   m_MaterialTemplate: {fileID: 0}
 --- !u!4 &228846081
 Transform:
@@ -12503,6 +12504,56 @@ MeshFilter:
   m_PrefabInternal: {fileID: 134675987}
   m_GameObject: {fileID: 685106230}
   m_Mesh: {fileID: 4300014, guid: cf0e6270e96c4ab45a018d0566c79c85, type: 3}
+--- !u!1 &685758378
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 685758380}
+  - 114: {fileID: 685758379}
+  m_Layer: 0
+  m_Name: EndGame
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &685758379
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 685758378}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87dc7437af093304d82a1c57a82a6940, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  showEndLevelScreen: 0
+  showGoodTab: 0
+  endLevelTexture: {fileID: 2800000, guid: 93eac2420a18ff344b717e2c09fbf27d, type: 3}
+  goodUpgradesTexture: {fileID: 2800000, guid: 8e8bbf6198348a04d9c58872f0166b4d, type: 3}
+  badUpgradesTexture: {fileID: 2800000, guid: 4d83d572136255742913c6d6dcb7b417, type: 3}
+  lightningUpTexture: {fileID: 2800000, guid: d81a1273aa02d694dafe270c1284f1d1, type: 3}
+  sizeUpTexture: {fileID: 2800000, guid: 30714beb8d0ae9748900db1756219927, type: 3}
+  healthUpTexture: {fileID: 2800000, guid: a46d981f49f06bd448bda61a08ed3ad2, type: 3}
+  cloudsUpTexture: {fileID: 2800000, guid: 7ebe0b999f23ff047bdbd135f81dd891, type: 3}
+  speedUpTexture: {fileID: 2800000, guid: 449a540d7fa6efa4790c09c3f4946a8d, type: 3}
+  turnSpeedUpTexture: {fileID: 2800000, guid: 9cebb83c737387e4f8f2162bcc6809c4, type: 3}
+--- !u!4 &685758380
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 685758378}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 10
 --- !u!1 &687736910
 GameObject:
   m_ObjectHideFlags: 0
