@@ -138,6 +138,10 @@ public class GUIBehaviour : MonoBehaviour {
     {
         GUI.depth = 1;
 
+        // Display score
+        ScoreManager score = GameObject.FindObjectOfType<ScoreManager>();
+        GUI.Label(new Rect(Screen.width / 3f, Screen.height / 50f, Screen.width / 3f, Screen.height / 20f), string.Format("Score: {0}", score.TotalLevelScore));
+
         // Start sun animation
         sunRect = new Rect(Screen.width - 100f, Screen.height * (1f/2f), 100, 100);
         Vector3 newAnimPos = Camera.main.ScreenToWorldPoint(new Vector3(sunRect.xMin, sunRect.yMin, 6));
