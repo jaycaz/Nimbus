@@ -104,7 +104,7 @@ public class CloudBehaviour : MonoBehaviour {
 
         rainDuration = 3;
 
-        water = 15;
+        water = 60;
 
         initialWater = water;
 
@@ -238,7 +238,7 @@ public class CloudBehaviour : MonoBehaviour {
         if (activeWeather)
         {
             deltaTimePassed += Time.deltaTime;
-            Debug.Log(string.Format("deltaTimePassed: {0}", deltaTimePassed));
+            //Debug.Log(string.Format("deltaTimePassed: {0}", deltaTimePassed));
             if (isRaining)
             {
                 if (rainDuration <= deltaTimePassed)
