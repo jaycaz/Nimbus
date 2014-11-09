@@ -458,9 +458,7 @@ MonoBehaviour:
   TornadoDuration: 0
   hasDest: 0
   destination: {x: 0, y: 0, z: 0}
-  moveToObject: {fileID: 0}
-  rightClickSprite: {fileID: 21300000, guid: e06a5b0204b944b45a0e49da1c4bd30c, type: 3}
-  animController: {fileID: 9100000, guid: 8672fc2a5769e2944839751314cf951d, type: 2}
+  markerPrefab: {fileID: 100000, guid: daec72e5469619e4a81856099c5b1b8c, type: 2}
 --- !u!135 &13500000
 SphereCollider:
   m_ObjectHideFlags: 1
