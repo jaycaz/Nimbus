@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using RTS;
 
 public class EndGameManager : MonoBehaviour {
 
@@ -15,6 +16,8 @@ public class EndGameManager : MonoBehaviour {
     public Texture cloudsUpTexture;
     public Texture speedUpTexture;
     public Texture turnSpeedUpTexture;
+
+    public float remainingTime;
 
     
     Rect menuButtonRect;
@@ -38,6 +41,8 @@ public class EndGameManager : MonoBehaviour {
         showGoodTab = true;
         CursorBehaviour c = GameObject.FindObjectOfType<CursorBehaviour>();
         c.CursorLeftClick += OnCursorLeftClick;
+
+        remainingTime = ResourceManager.LevelTime;
 	}
 
     private void OnCursorLeftClick(object sender, CursorClickEventArgs e)
@@ -146,5 +151,11 @@ public class EndGameManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        remainingTime -= Time.deltaTime;
+
+        if (remainingTime <= 0)
+        {
+            showEndLevelScreen = true;
+        }
 	}
 }

@@ -141,9 +141,14 @@ public class GUIBehaviour : MonoBehaviour {
 
         // Display score
         GUIStyle scoreStyle = new GUIStyle();
-        scoreStyle.fontSize = 100;
+        scoreStyle.fontSize = 50;
         ScoreManager score = GameObject.FindObjectOfType<ScoreManager>();
         GUI.Label(new Rect(Screen.width / 3f, Screen.height / 50f, Screen.width / 3f, Screen.height / 20f), string.Format("Score: {0}", score.TotalLevelScore), scoreStyle);
+        
+        // Display timer
+        EndGameManager end = GameObject.FindObjectOfType<EndGameManager>();
+        Rect timerRect = new Rect(Screen.width * (3f/4f), 20f, Screen.width / 10f, Screen.height / 20f);
+        GUI.Label(timerRect, string.Format("Time remaining: {0}", (int) end.remainingTime), scoreStyle);
 
         // Start sun animation
         sunRect = new Rect(Screen.width - 100f, Screen.height * (1f/2f), 100, 100);

@@ -18,5 +18,6 @@ namespace RTS
         public static float CloudMoveSpeed { get { return 5.0f; } }
         public static float CloudPointTolerance { get { return 20f; } }
         public static float MoveToMarkerDuration { get { return 1f; } }
+        public static float LevelTime { get { return 180; } }
     }
 }
