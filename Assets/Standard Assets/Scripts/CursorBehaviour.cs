@@ -12,7 +12,9 @@ public class CursorBehaviour : MonoBehaviour {
 
     public Texture cursorTexture;
     public delegate void CursorLeftClickHandler(object sender, CursorClickEventArgs e);
+    public delegate void CursorRightClickHandler(object sender, CursorClickEventArgs e);
     public event CursorLeftClickHandler CursorLeftClick;
+    public event CursorRightClickHandler CursorRightClick;
 
     public float xpos;
     public float ypos;
@@ -63,21 +65,29 @@ public class CursorBehaviour : MonoBehaviour {
             Vector2 pos = Position;
             var e = new CursorClickEventArgs();
             e.position = pos;
-            OnCursorLeftClick(e);
+            OnCursorRightClick(e);
         }
-        if (Input.GetMouseButtonDown(2))
+        /*if (Input.GetMouseButtonDown(2))
         {
             Vector2 pos = Position;
             var e = new CursorClickEventArgs();
             e.position = pos;
-            OnCursorLeftClick(e);
-        }
+            OnCursorMiddleClick(e);
+        }*/
     }
 
     void OnCursorLeftClick(CursorClickEventArgs e)
     {
         CursorLeftClickHandler handler = CursorLeftClick;
-        //Debug.Log(string.Format("Left Mouse Clicked! {0}", UnityEngine.Random.Range(1, 100)));
+        if(handler != null)
+        {
+            handler(this, e);
+        }
+    }
+
+    void OnCursorRightClick(CursorClickEventArgs e)
+    {
+        CursorRightClickHandler handler = CursorRightClick;
         if(handler != null)
         {
             handler(this, e);

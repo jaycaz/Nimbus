@@ -14,5 +14,6 @@ namespace RTS
         public static float MouseSensitivity { get { return 1000; } }
         public static float CloudTurnSpeed { get { return 200; } }
         public static float CloudMoveSpeed { get { return 5.0f; } }
+        public static float CloudPointTolerance { get { return 20f; } }
     }
 }
